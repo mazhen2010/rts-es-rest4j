@@ -97,28 +97,24 @@ public class Classes {
         return !clazz.isInterface() && !Modifier.isAbstract(modifiers);
     }
 
-    public static <T> Class<? extends T> loadClass(ClassLoader classLoader, String className, String prefixPackage, String suffixClassName) {
-        return loadClass(classLoader, className, prefixPackage, suffixClassName, null);
-    }
-
     @SuppressWarnings({"unchecked"})
-    public static <T> Class<? extends T> loadClass(ClassLoader classLoader, String className, String prefixPackage, String suffixClassName, String errorPrefix) {
-        Throwable t = null;
-        String[] classNames = classNames(className, prefixPackage, suffixClassName);
-        for (String fullClassName : classNames) {
-            try {
-                return (Class<? extends T>) classLoader.loadClass(fullClassName);
-            } catch (ClassNotFoundException ex) {
-                t = ex;
-            } catch (NoClassDefFoundError er) {
-                t = er;
-            }
-        }
-        if (errorPrefix == null) {
-            errorPrefix = "failed to load class";
-        }
-        throw new NoClassSettingsException(errorPrefix + " with value [" + className + "]; tried " + Arrays.toString(classNames), t);
-    }
+//    public static <T> Class<? extends T> loadClass(ClassLoader classLoader, String className, String prefixPackage, String suffixClassName, String errorPrefix) {
+//        Throwable t = null;
+//        String[] classNames = classNames(className, prefixPackage, suffixClassName);
+//        for (String fullClassName : classNames) {
+//            try {
+//                return (Class<? extends T>) classLoader.loadClass(fullClassName);
+//            } catch (ClassNotFoundException ex) {
+//                t = ex;
+//            } catch (NoClassDefFoundError er) {
+//                t = er;
+//            }
+//        }
+//        if (errorPrefix == null) {
+//            errorPrefix = "failed to load class";
+//        }
+//        throw new NoClassSettingsException(errorPrefix + " with value [" + className + "]; tried " + Arrays.toString(classNames), t);
+//    }
 
     private static String[] classNames(String className, String prefixPackage, String suffixClassName) {
         String prefixValue = prefixPackage;

@@ -76,11 +76,11 @@ public class ContextHolder {
      *
      * @see     #putInContext(Object, Object)
      */
-    @SuppressWarnings("unchecked")
-    public final synchronized <V> V getFromContext(Object key, V defaultValue) {
-        V value = getFromContext(key);
-        return value == null ? defaultValue : value;
-    }
+//    @SuppressWarnings("unchecked")
+//    public final synchronized <V> V getFromContext(Object key, V defaultValue) {
+//        V value = getFromContext(key);
+//        return value == null ? defaultValue : value;
+//    }
 
     /**
      * Checks if the context contains an entry with the given key

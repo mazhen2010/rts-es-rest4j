@@ -437,39 +437,40 @@ public class ImmutableSettings implements Settings {
     @SuppressWarnings({"unchecked"})
     @Override
     public <T> Class<? extends T> getAsClass(String setting, Class<? extends T> defaultClazz, String prefixPackage, String suffixClassName) throws NoClassSettingsException {
-        String sValue = get(setting);
-        if (sValue == null) {
-            return defaultClazz;
-        }
-        String fullClassName = sValue;
-        try {
-            return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
-        } catch (ClassNotFoundException e) {
-            String prefixValue = prefixPackage;
-            int packageSeparator = sValue.lastIndexOf('.');
-            if (packageSeparator > 0) {
-                prefixValue = sValue.substring(0, packageSeparator + 1);
-                sValue = sValue.substring(packageSeparator + 1);
-            }
-            fullClassName = prefixValue + Strings.capitalize(toCamelCase(sValue)) + suffixClassName;
-            try {
-                return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
-            } catch (ClassNotFoundException e1) {
-                return loadClass(prefixValue, sValue, suffixClassName, setting);
-            } catch (NoClassDefFoundError e1) {
-                return loadClass(prefixValue, sValue, suffixClassName, setting);
-            }
-        }
+        return null;
+//        String sValue = get(setting);
+//        if (sValue == null) {
+//            return defaultClazz;
+//        }
+//        String fullClassName = sValue;
+//        try {
+//            return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
+//        } catch (ClassNotFoundException e) {
+//            String prefixValue = prefixPackage;
+//            int packageSeparator = sValue.lastIndexOf('.');
+//            if (packageSeparator > 0) {
+//                prefixValue = sValue.substring(0, packageSeparator + 1);
+//                sValue = sValue.substring(packageSeparator + 1);
+//            }
+//            fullClassName = prefixValue + Strings.capitalize(toCamelCase(sValue)) + suffixClassName;
+//            try {
+//                return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
+//            } catch (ClassNotFoundException e1) {
+//                return loadClass(prefixValue, sValue, suffixClassName, setting);
+//            } catch (NoClassDefFoundError e1) {
+//                return loadClass(prefixValue, sValue, suffixClassName, setting);
+//            }
+//        }
     }
 
-    private <T> Class<? extends T> loadClass(String prefixValue, String sValue, String suffixClassName, String setting) {
-        String fullClassName = prefixValue + toCamelCase(sValue).toLowerCase(Locale.ROOT) + "." + Strings.capitalize(toCamelCase(sValue)) + suffixClassName;
-        try {
-            return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
-        } catch (ClassNotFoundException e2) {
-            throw new NoClassSettingsException("Failed to load class setting [" + setting + "] with value [" + get(setting) + "]", e2);
-        }
-    }
+//    private <T> Class<? extends T> loadClass(String prefixValue, String sValue, String suffixClassName, String setting) {
+//        String fullClassName = prefixValue + toCamelCase(sValue).toLowerCase(Locale.ROOT) + "." + Strings.capitalize(toCamelCase(sValue)) + suffixClassName;
+//        try {
+//            return (Class<? extends T>) getClassLoader().loadClass(fullClassName);
+//        } catch (ClassNotFoundException e2) {
+//            throw new NoClassSettingsException("Failed to load class setting [" + setting + "] with value [" + get(setting) + "]", e2);
+//        }
+//    }
 
     @Override
     public String[] getAsArray(String settingPrefix) throws SettingsException {
@@ -908,7 +909,7 @@ public class ImmutableSettings implements Settings {
 
         /**
          * Loads settings from the actual string content that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {@link org.elasticsearch.common.settings.loader.SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromSource(String source) {
             SettingsLoader settingsLoader = SettingsLoaderFactory.loaderFromSource(source);
@@ -923,7 +924,7 @@ public class ImmutableSettings implements Settings {
 
         /**
          * Loads settings from a url that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {@link org.elasticsearch.common.settings.loader.SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromUrl(URL url) throws SettingsException {
             try {
@@ -935,7 +936,7 @@ public class ImmutableSettings implements Settings {
 
         /**
          * Loads settings from a stream that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {@link org.elasticsearch.common.settings.loader.SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromStream(String resourceName, InputStream is) throws SettingsException {
             SettingsLoader settingsLoader = SettingsLoaderFactory.loaderFromResource(resourceName);
@@ -950,7 +951,7 @@ public class ImmutableSettings implements Settings {
 
         /**
          * Loads settings from classpath that represents them using the
-         * {@link SettingsLoaderFactory#loaderFromSource(String)}.
+         * {@link org.elasticsearch.common.settings.loader.SettingsLoaderFactory#loaderFromSource(String)}.
          */
         public Builder loadFromClasspath(String resourceName) throws SettingsException {
             ClassLoader classLoader = this.classLoader;
